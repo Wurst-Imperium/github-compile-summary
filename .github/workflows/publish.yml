@@ -44,7 +44,7 @@ jobs:
     - name: Create and push tag
       if: ${{ github.ref_type != 'tag' }}
       run: |
-        VERSION=$(grep "^version=" gradle.properties | cut -d'=' -f2 | tr -d ' \r')
+        VERSION=v$(grep "^version=" gradle.properties | cut -d'=' -f2 | tr -d ' \r')
         git config --global user.name "Wurst-Bot"
         git config --global user.email "contact.wurstimperium@gmail.com"
         git tag "$VERSION"
