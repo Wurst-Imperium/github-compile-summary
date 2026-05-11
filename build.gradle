@@ -3,14 +3,20 @@ plugins {
 	id "maven-publish"
 }
 
-group = "net.wimods.gradle"
-version = "0.1.0"
-
 gradlePlugin {
 	plugins {
 		githubCompileSummary {
 			id = "net.wimods.github-compile-summary"
 			implementationClass = "net.wimods.gradle.GitHubCompileSummaryPlugin"
+		}
+	}
+}
+
+publishing {
+	repositories {
+		maven {
+			name = "staging"
+			url = layout.buildDirectory.dir("maven-repo")
 		}
 	}
 }
