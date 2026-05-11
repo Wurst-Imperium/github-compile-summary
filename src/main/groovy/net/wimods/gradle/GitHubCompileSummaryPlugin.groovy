@@ -9,6 +9,7 @@ import org.gradle.api.logging.StandardOutputListener
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.work.DisableCachingByDefault
 
 public class GitHubCompileSummaryPlugin implements Plugin<Project> {
 	@Override
@@ -23,7 +24,7 @@ public class GitHubCompileSummaryPlugin implements Plugin<Project> {
 			it.group = "verification"
 			it.description = "Writes failed Java compiler output to the GitHub step summary."
 			it.summaryFile.set(new File(summaryPath))
-			it.outputs.upToDateWhen { false }
+			it.onlyIf { OutputCaptureManager.hasCapture() }
 		}
 
 		project.tasks.withType(JavaCompile).configureEach { JavaCompile compileTask ->
@@ -40,6 +41,7 @@ public class GitHubCompileSummaryPlugin implements Plugin<Project> {
 	}
 }
 
+@DisableCachingByDefault(because = "Writes captured compiler output to the GitHub step summary.")
 public abstract class GitHubCompileSummaryTask extends DefaultTask {
 	@Internal
 	public abstract RegularFileProperty getSummaryFile()
@@ -78,6 +80,10 @@ public class OutputCaptureManager {
 		capture = new OutputCapture(task: task)
 		task.logging.addStandardOutputListener(capture.listener)
 		task.logging.addStandardErrorListener(capture.listener)
+	}
+
+	public static boolean hasCapture() {
+		return capture != null
 	}
 
 	public static OutputCapture stop() {
