@@ -64,6 +64,6 @@ jobs:
 
     - name: Upload to Maven server
       run: |
-        rsync -rltvz \
+        rsync -rlvz \
           build/maven-repo/ \
           "${{ secrets.MAVEN_DEPLOY_USER }}@${{ secrets.MAVEN_DEPLOY_HOST }}:"
