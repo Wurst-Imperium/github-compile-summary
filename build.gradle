@@ -1,0 +1,16 @@
+plugins {
+	id "groovy-gradle-plugin"
+	id "maven-publish"
+}
+
+group = "net.wimods.gradle"
+version = "0.1.0"
+
+gradlePlugin {
+	plugins {
+		githubCompileSummary {
+			id = "net.wimods.github-compile-summary"
+			implementationClass = "net.wimods.gradle.GitHubCompileSummaryPlugin"
+		}
+	}
+}
