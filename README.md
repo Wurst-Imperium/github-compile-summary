@@ -34,7 +34,7 @@ Add this to your `build.gradle`:
 
 ```groovy
 plugins {
-    id "net.wimods.github-compile-summary" version "0.1.0"
+    id "net.wimods.github-compile-summary" version "0.1.1"
 }
 ```
 
